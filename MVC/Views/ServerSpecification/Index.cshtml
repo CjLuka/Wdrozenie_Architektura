@@ -1,0 +1,61 @@
+﻿@using Application.Models
+
+@model List<ServerSpecificationViewModel>
+
+@{
+}
+
+
+<section class="section-padding">
+    <div class="container mt-5 mb-5 border rounded bg-light p-3">
+        <div class="row">
+            <div class="col-md-12">
+            </div>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="col-4">
+                            <p>Nazwa</p>
+                        </th>
+                        <th class="col-4">
+                            <p>Adres IP</p>
+                        </th>
+                        <th class="col-4">
+                            <p>Pojemność dysku</p>
+                        </th>
+                        <th class="col-4">
+                            <p>Ram</p>
+                        </th>
+                        <th class="col-4">
+                            <p>Procesy</p>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var model in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(p => model.DomainName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(p => model.IpAddress)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(p => model.DiskSizeInGB)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(p => model.NumberOfRam)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(p => model.NumberOfCores)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
