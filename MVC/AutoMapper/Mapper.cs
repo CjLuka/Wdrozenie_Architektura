@@ -1,4 +1,4 @@
-﻿using Application.Models;
+﻿using Application.Models.ServerSpecification;
 using AutoMapper;
 using Domain.Models.Entites;
 

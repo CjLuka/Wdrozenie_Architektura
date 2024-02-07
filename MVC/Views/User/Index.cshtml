@@ -1,10 +1,8 @@
-﻿@using Application.Models.ServerSpecification
-
-@model List<ServerSpecificationViewModel>
+﻿@using Application.Models.Account
+@model List<UsersViewModel>
 
 @{
 }
-
 
 <section class="section-padding">
     <div class="container mt-5 mb-5 border rounded bg-light p-3">
@@ -17,19 +15,13 @@
                 <thead>
                     <tr>
                         <th class="col-4">
-                            <p>Nazwa</p>
+                            <p>Nazwa użytkownika</p>
                         </th>
                         <th class="col-4">
-                            <p>Adres IP</p>
+                            <p>Email</p>
                         </th>
                         <th class="col-4">
-                            <p>Pojemność dysku</p>
-                        </th>
-                        <th class="col-4">
-                            <p>Ram</p>
-                        </th>
-                        <th class="col-4">
-                            <p>Procesy</p>
+                            <p>Aktualizuj</p>
                         </th>
                     </tr>
                 </thead>
@@ -38,24 +30,19 @@
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(p => model.DomainName)
+                                @Html.DisplayFor(p => model.UserName)
                             </td>
                             <td>
-                                @Html.DisplayFor(p => model.IpAddress)
+                                @Html.DisplayFor(p => model.Email)
                             </td>
                             <td>
-                                @Html.DisplayFor(p => model.DiskSizeInGB)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(p => model.NumberOfRam)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(p => model.NumberOfCores)
+                                <a href="@Url.Action("Edit", "User", new { id = model.Id })">Edytuj</a>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
+            <a href="@Url.Action("Create", "User")">Dodaj nowego użytkownika</a>
         </div>
     </div>
 </section>

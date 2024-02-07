@@ -1,0 +1,25 @@
+﻿@using Application.Models.Account
+@* @model UpdateUserViewModel
+ *@
+@model UsersViewModel
+@{
+}
+
+@using (Html.BeginForm("Update", "User", FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.Id) <!-- Przekazanie Id użytkownika -->
+
+    <div class="form-group">
+        <label asp-for="UserName" class="control-label">Nazwa użytkownika:</label>
+        <input asp-for="UserName" class="form-control" value="@Model.UserName" required/>
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email" class="control-label">Email:</label>
+        <input asp-for="Email" class="form-control" value="@Model.Email" required />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+}

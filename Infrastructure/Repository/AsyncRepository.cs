@@ -32,5 +32,12 @@ namespace Infrastructure.Repository
         {
             return await _context.Set<T>().FindAsync(id);
         }
+
+        public async Task UpdateAsync(T entity)
+        {
+            _context.Update(entity)
+                .State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
     }
 }
