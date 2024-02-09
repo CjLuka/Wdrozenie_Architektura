@@ -16,7 +16,7 @@ namespace Application
         {
             services.AddScoped<IServerSpecificationServices, ServerSpecificationServices>();
             services.AddScoped<IUserServices, UserServices>();
-
+            services.AddHttpContextAccessor();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             return services;

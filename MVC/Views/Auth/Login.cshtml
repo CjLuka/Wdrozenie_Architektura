@@ -1,7 +1,6 @@
 ﻿@using Application.Models.Auth
 @model LoginViewModel
 
-
 @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
 {
     <div class="form-group">
@@ -17,8 +16,13 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Zaloguj się</button>
+
+    <hr />
+
+    <p>lub zaloguj się za pomocą:</p>
+
+    <div>
+        <a asp-controller="Auth" asp-action="ExternalLogin" class="btn btn-primary">Zaloguj przez google nowe</a>
+        <a class="btn btn-danger" href="@Url.Action("ExternalLogin", "Auth", new { provider = "Google", returnUrl = ViewBag.ReturnUrl })">Zaloguj przez Google</a>
+    </div>
 }
-
-
-
-

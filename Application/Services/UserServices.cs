@@ -4,11 +4,14 @@ using Application.Models.Account;
 using Application.Models.Auth;
 using AutoMapper;
 using Domain.Models.Entites;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,13 +23,15 @@ namespace Application.Services
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        public UserServices(IUserRepository userRepository, IMapper mapper, UserManager<User> userManager, SignInManager<User> signInManager)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public UserServices(IUserRepository userRepository, IMapper mapper, UserManager<User> userManager, SignInManager<User> signInManager, IHttpContextAccessor httpContextAccessor)
         {
             _mapper = mapper;
             _userRepository = userRepository;
             _userManager = userManager;
             _signInManager = signInManager;
-
+            _httpContextAccessor = httpContextAccessor;
         }
 
         //Dodanie nowego użytkownika
@@ -136,6 +141,48 @@ namespace Application.Services
             {
                 return;
             }
+        }
+        public async Task<LoginGoogle> ProcessExternalLogin(string returnUrl, string remoteError)
+        {
+            if (remoteError != null)
+            {
+                // Obsługa błędu logowania zewnętrznego
+                return null;
+            }
+
+            var info = await _httpContextAccessor.HttpContext.AuthenticateAsync("ExternalCookie");
+            if (info == null)
+            {
+                return null;
+            }
+
+            // Sprawdź, czy użytkownik już istnieje w systemie
+            var user = await _userManager.FindByEmailAsync(info.Principal.FindFirstValue(ClaimTypes.Email));
+
+            if (user == null)
+            {
+                // Jeśli użytkownik nie istnieje, zarejestruj go
+                user = new User
+                {
+                    UserName = info.Principal.FindFirstValue(ClaimTypes.Email),
+                    Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                    // Dodaj inne właściwości użytkownika, które chcesz zainicjować
+                };
+
+                var result = await _userManager.CreateAsync(user);
+
+                if (!result.Succeeded)
+                {
+                    // Obsługa błędu rejestracji
+                    return null;
+                }
+            }
+
+            // Zaloguj użytkownika
+            await _signInManager.SignInAsync(user, isPersistent: false);
+
+            // Przekieruj na stronę docelową po udanym logowaniu
+            return new LoginGoogle { ReturnUrl = returnUrl };
         }
     }
 }
