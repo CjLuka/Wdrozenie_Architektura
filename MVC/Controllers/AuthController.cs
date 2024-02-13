@@ -61,6 +61,8 @@ namespace MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
+
         public async Task ExternalLogin()
         {
             await HttpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties
@@ -72,10 +74,7 @@ namespace MVC.Controllers
         public async Task<IActionResult> GoogleResponse()
         {
             var result = await HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme);
-            //if (!result.Succeeded || result.Principal == null)
-            //{
-            //    return RedirectToAction("Login");
-            //}
+
             var claims = result.Principal.Identities.FirstOrDefault().Claims;
             var subClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
 
@@ -84,7 +83,6 @@ namespace MVC.Controllers
                 var existingUser = await _userManager.FindByEmailAsync(subClaim);
                 if (existingUser != null)
                 {
-                    // Użytkownik już istnieje, zaloguj go
                     await _signInMannager.SignInAsync(existingUser, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
@@ -97,7 +95,6 @@ namespace MVC.Controllers
             }
             else
             {
-                // Nie znaleziono claimsa 'sub', obsłuż błąd
                 return RedirectToAction("Login");
             }       
         }

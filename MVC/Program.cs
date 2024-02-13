@@ -32,26 +32,6 @@ builder.Services.AddAuthentication(options =>
         options.ClientSecret = configuration["Authentication:Google:ClientSecret"];
     });
 
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultScheme = IdentityConstants.ApplicationScheme;
-//    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-//    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-//})
-//    .AddCookie(options =>
-//    {
-//        //options.Cookie.Name = "token"; // Ustaw nazwê ciasteczka
-//        options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Przyk³adowy czas trwania 30 minut
-//        options.SlidingExpiration = true;
-//        options.Cookie.HttpOnly = true;
-//        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-//        options.Cookie.SameSite = SameSiteMode.Strict;
-//    })
-//    .AddGoogle(googleOptions =>
-//    {
-//        googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-//        googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
-//    });
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication(builder.Configuration);
 

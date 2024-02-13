@@ -1,4 +1,5 @@
-﻿using Application.InterfaceRepository;
+﻿using Application.Function.ServerSpecification.Commands.Update;
+using Application.InterfaceRepository;
 using Application.InterfaceServices;
 using Application.Models.ServerSpecification;
 using AutoMapper;
@@ -30,6 +31,12 @@ namespace Application.Services
             }
             return null;
         }
-        
+
+        public async Task<UpdateServerSpecificationCommand> GetByIdAsync(int id)
+        {
+            var server = await _serverSpecificationRepository.GetByIdAsync(id);
+
+            return _mapper.Map<UpdateServerSpecificationCommand>(server);
+        }
     }
 }

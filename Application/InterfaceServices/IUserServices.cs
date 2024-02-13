@@ -19,6 +19,5 @@ namespace Application.InterfaceServices
         Task<Register> Register(Register register);
         Task<SignInResult> Login(LoginViewModel login);
         public void Logout();
-        Task<LoginGoogle> ProcessExternalLogin(string returnUrl, string remoteError);
     }
 }

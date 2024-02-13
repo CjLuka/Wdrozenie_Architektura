@@ -23,6 +23,12 @@ namespace Infrastructure.Repository
             return entity;
         }
 
+        public async Task DeleteAsync(T entity)
+        {
+            _context.Remove(entity);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<List<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();

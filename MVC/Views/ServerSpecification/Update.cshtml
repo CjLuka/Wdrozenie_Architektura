@@ -1,0 +1,40 @@
+﻿@using Application.Function.ServerSpecification.Queries.GetDetails
+@model GetDetailsServerDto
+
+@using (Html.BeginForm("Update", "ServerSpecification", FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.Id)
+    <p>ID: @Model.Id</p>
+
+    <div class="form-group">
+        <label asp-for="NumberOfCores" class="control-label">Liczba rdzeni:</label>
+        <input asp-for="NumberOfCores" class="form-control" required />
+        <span asp-validation-for="NumberOfCores" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NumberOfRam" class="control-label">Ilość RAMu:</label>
+        <input asp-for="NumberOfRam" class="form-control" required />
+        <span asp-validation-for="NumberOfRam" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DiskSizeInGB" class="control-label">Rozmiar dysku (w GB):</label>
+        <input asp-for="DiskSizeInGB" class="form-control" required />
+        <span asp-validation-for="DiskSizeInGB" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IpAddress" class="control-label">Adres IP:</label>
+        <input asp-for="IpAddress" class="form-control" required />
+        <span asp-validation-for="IpAddress" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DomainName" class="control-label">Nazwa domeny:</label>
+        <input asp-for="DomainName" class="form-control" required />
+        <span asp-validation-for="DomainName" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Aktualizuj serwer</button>
+}

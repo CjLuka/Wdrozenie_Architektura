@@ -22,7 +22,6 @@
     <p>lub zaloguj się za pomocą:</p>
 
     <div>
-        <a asp-controller="Auth" asp-action="ExternalLogin" class="btn btn-primary">Zaloguj przez google nowe</a>
-        <a class="btn btn-danger" href="@Url.Action("ExternalLogin", "Auth", new { provider = "Google", returnUrl = ViewBag.ReturnUrl })">Zaloguj przez Google</a>
+        <a asp-controller="Auth" asp-action="ExternalLogin" class="btn btn-primary">Zaloguj przez google</a>
     </div>
 }

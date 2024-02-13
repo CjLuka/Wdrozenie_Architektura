@@ -1,6 +1,6 @@
-﻿@using Application.Models.ServerSpecification
+﻿@using Application.Function.ServerSpecification.Queries.GetAll
 
-@model List<ServerSpecificationViewModel>
+@model List<GetAllServersDto>
 
 @{
 }
@@ -31,31 +31,46 @@
                         <th class="col-4">
                             <p>Procesy</p>
                         </th>
+                        <th class="col-4">
+                            <p></p>
+                        </th>
+                        <th class="col-4">
+                            <p></p>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var model in Model)
+                    @foreach (var models in Model)
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(p => model.DomainName)
+                                @Html.DisplayFor(p => models.DomainName)
                             </td>
                             <td>
-                                @Html.DisplayFor(p => model.IpAddress)
+                                @Html.DisplayFor(p => models.IpAddress)
                             </td>
                             <td>
-                                @Html.DisplayFor(p => model.DiskSizeInGB)
+                                @Html.DisplayFor(p => models.DiskSizeInGB)
                             </td>
                             <td>
-                                @Html.DisplayFor(p => model.NumberOfRam)
+                                @Html.DisplayFor(p => models.NumberOfRam)
                             </td>
                             <td>
-                                @Html.DisplayFor(p => model.NumberOfCores)
+                                @Html.DisplayFor(p => models.NumberOfCores)
+                            </td>
+                            <td>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="ServerSpecification" asp-action="Delete" asp-route-id="@models.Id">Usuń</a>
+                            </td>
+                            <td>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="ServerSpecification" asp-action="Update" asp-route-id="@models.Id">Aktualizuj</a>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
+            <div>
+                <a class="nav-link text-dark" asp-area="" asp-controller="ServerSpecification" asp-action="Create">Dodaj nowy serwer</a>
+            </div>
         </div>
     </div>
 </section>

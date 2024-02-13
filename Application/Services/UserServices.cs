@@ -75,7 +75,7 @@ namespace Application.Services
         public async Task<List<UsersViewModel>> GetAllAsync()
         {
             var allUsers = await _userRepository.GetAllAsync();
-            if (allUsers.Any())
+            if (allUsers.Count != 0)
             {
                 var users = _mapper.Map<List<UsersViewModel>>(allUsers);
                 return users;
@@ -142,47 +142,6 @@ namespace Application.Services
                 return;
             }
         }
-        public async Task<LoginGoogle> ProcessExternalLogin(string returnUrl, string remoteError)
-        {
-            if (remoteError != null)
-            {
-                // Obsługa błędu logowania zewnętrznego
-                return null;
-            }
-
-            var info = await _httpContextAccessor.HttpContext.AuthenticateAsync("ExternalCookie");
-            if (info == null)
-            {
-                return null;
-            }
-
-            // Sprawdź, czy użytkownik już istnieje w systemie
-            var user = await _userManager.FindByEmailAsync(info.Principal.FindFirstValue(ClaimTypes.Email));
-
-            if (user == null)
-            {
-                // Jeśli użytkownik nie istnieje, zarejestruj go
-                user = new User
-                {
-                    UserName = info.Principal.FindFirstValue(ClaimTypes.Email),
-                    Email = info.Principal.FindFirstValue(ClaimTypes.Email),
-                    // Dodaj inne właściwości użytkownika, które chcesz zainicjować
-                };
-
-                var result = await _userManager.CreateAsync(user);
-
-                if (!result.Succeeded)
-                {
-                    // Obsługa błędu rejestracji
-                    return null;
-                }
-            }
-
-            // Zaloguj użytkownika
-            await _signInManager.SignInAsync(user, isPersistent: false);
-
-            // Przekieruj na stronę docelową po udanym logowaniu
-            return new LoginGoogle { ReturnUrl = returnUrl };
-        }
+        
     }
 }
